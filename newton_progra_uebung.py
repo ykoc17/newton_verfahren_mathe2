@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 def newton(x0, f, Df, tol, itmax, x=None):
     x_k = x0
@@ -62,13 +62,20 @@ print("")
 for i in x_ki: print(i)
 """
 
-x_werte = np.linspace(-2.5, 2.5, num=1000)
-print(x_werte)
+x_startwerte = np.linspace(-2.5, 2.5, num=10000)
 
 x_star_werte = np.array([])
-for x0 in x_werte:
+for x0 in x_startwerte:
     x_star = newton(x0, f4, Df4, 0.0001, 1000)
     x_star_werte = np.append(x_star_werte, x_star)
 
-print(x_star_werte)
+fig, (axa, axb) = plt.subplots(2,1)
+fig.suptitle("Grenzwerte für jeden Startwert x0 aus [-2.5, 2.5]")
+axa.plot(x_startwerte, x_star_werte, "_")
+axb.plot(x_startwerte, f4(x_startwerte))
+axb.plot(x_startwerte, np.zeros(x_startwerte.size))
 
+#c)
+
+
+plt.show()
