@@ -8,13 +8,22 @@ def newton(x0, f, Df, tol, itmax, x=None):
     it = 0
     while True:
         it += 1
-        if x0.size == 1: delta_k = -(f(x_k)/Df(x_k))
-        else: delta_k = np.linalg.solve(Df(x_k), -f(x_k))
+        if x0.size == 1:
+            delta_k = -(f(x_k)/Df(x_k))
+        else:
+            Df_xk = Df(x_k)
+            if np.linalg.det(Df_xk) == 0:
+                print("Jacobi-Matrix ist singulär. Kein Newton-Verfahren möglich!")
+                break
+            else:
+                delta_k = np.linalg.solve(Df_xk, -f(x_k))
+
         x_k_prev = x_k
         x_k = x_k + delta_k
         if x != None: x.append(x_k)
         if np.linalg.norm(x_k - x_k_prev) <= tol: break
         if it == itmax: break
+
     return x_k
 
 #a)
@@ -41,13 +50,36 @@ def Df3(x): #in-place ?
     return np.array([[0.25*x[0]*np.pi*np.cos(np.pi*0.5*x[0])+0.5*np.sin(np.pi*0.5*x[0]), -1],
                      [-1, 2*x[1]]])
 
-"""
+print("f1:\n")
 x_ki = []
-x_star = newton(np.array([0.1,0.1]), f2, Df2, 0.0001, 1000, x_ki)
-print(x_star)
-print("")
-for i in x_ki: print(i)
-"""
+x_star = newton(np.array([1,1]), f1, Df1, 0.0001, 1000, x_ki)
+print("x*=", x_star)
+print("\nIterationsschritte:")
+it=0
+for i in x_ki:
+    print(it, ":", i)
+    it+=1
+
+print("\nf2:\n")
+x_ki = []
+x_star = newton(np.array([1,0.1]), f1, Df1, 0.0001, 1000, x_ki)
+print("x*=", x_star)
+print("\nIterationsschritte:")
+it=0
+for i in x_ki:
+    print(it, ":", i)
+    it+=1
+
+print("\nf3:\n")
+x_ki = []
+x_star = newton(np.array([1,0.1]), f2, Df2, 0.0001, 1000, x_ki)
+print("x*=", x_star)
+print("\nIterationsschritte:")
+it=0
+for i in x_ki:
+    print(it, ":", i)
+    it+=1
+
 
 #b)
 
@@ -57,12 +89,15 @@ def f4(x):
 def Df4(x):
     return 4*pow(x,3)-10*x
 
-"""
+print("\nf4:\n")
 x_ki = []
 x_star = newton(np.array([5]), f4, Df4, 0.0001, 1000, x_ki)
-print(x_star)
-print("")
-for i in x_ki: print(i)
+print("x*=", x_star)
+print("\nIterationsschritte:")
+it=0
+for i in x_ki:
+    print(it, ":", i)
+    it+=1
 
 
 x_startwerte = np.linspace(-2.5, 2.5, num=10000)
@@ -77,9 +112,9 @@ fig.suptitle("Grenzwerte für jeden Startwert x0 aus [-2.5, 2.5]")
 axa.plot(x_startwerte, x_star_werte, "_")
 axb.plot(x_startwerte, f4(x_startwerte))
 axb.plot(x_startwerte, np.zeros(x_startwerte.size))
-"""
-#c)
 
+#c)
+"""
 def f5(x, j=3):
     r = np.sqrt(pow(x[0], 2)+pow(x[1], 2))
     rj = pow(r, j)
@@ -97,6 +132,7 @@ def f5(x, j=3):
         if x[0]<0: phi = np.pi
 
     print(phi)
+    print("")
 
     return np.array([rj*np.cos(j*phi),
                      rj*np.sin(j*phi)])
@@ -120,9 +156,10 @@ def Df5(x, j=3):
 
 
 x_ki = []
-x_star = newton(np.array([0.1,0.1]), f5, Df5, 0.0001, 900, x_ki)
+x_star = newton(np.array([0.1,0.1]), f5, Df5, 0.0001, 10, x_ki)
 print(x_star)
 print("")
 for i in x_ki: print(i)
+"""
 
 plt.show()
