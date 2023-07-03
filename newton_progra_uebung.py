@@ -148,52 +148,45 @@ plt.figtext(0.27, 0.4, "red-> -2   green-> -1   blue-> 1   yellow-> 2")
 
 
 #c)
-"""
-def f5(x, j=3):
-    r = np.sqrt(pow(x[0], 2)+pow(x[1], 2))
-    rj = pow(r, j)
-    print(r)
-    phi=0
-    if x[0]>0 and x[1]>0: phi = np.arctan(x[1]/x[0])
-    if x[0]<0 and x[1]>0: phi = np.pi - np.arctan(x[1]/x[0])
-    if x[0]<0 and x[1]<0: phi = np.pi + np.arctan(x[1]/x[0])
-    if x[0]>0 and x[1]<0: phi = np.pi*2 - np.arctan(x[1]/x[0])
-    if x[0]==0:
-        if x[1]>0: phi = np.pi/2
-        if x[1]<0: phi = 3*np.pi/2
-    if x[1]==0:
-        if x[0]>0: phi = 0
-        if x[0]<0: phi = np.pi
 
-    print(phi)
-    print("")
+k = 3        #k = j (j is reseved for imaginary number)
+tol = pow(10, -6)
 
-    return np.array([rj*np.cos(j*phi),
-                     rj*np.sin(j*phi)])
+def f5(z):
+    a = z[0]
+    b = z[1]
+    res = np.power((a+b*1j),k)-1
+    return np.array([np.real(res), np.imag(res)])
 
-def Df5(x, j=3):
-    r = np.sqrt(pow(x[0], 2)+pow(x[1], 2))
-    phi=0
-    if x[0]>0 and x[1]>0: phi = np.arctan(x[1]/x[0])
-    if x[0]<0 and x[1]>0: phi = np.pi - np.arctan(x[1]/x[0])
-    if x[0]<0 and x[1]<0: phi = np.pi + np.arctan(x[1]/x[0])
-    if x[0]>0 and x[1]<0: phi = np.pi*2 - np.arctan(x[1]/x[0])
-    if x[0]==0:
-        if x[1]>0: phi = np.pi/2
-        if x[1]<0: phi = 3*np.pi/2
-    if x[1]==0:
-        if x[0]>0: phi = 0
-        if x[0]<0: phi = np.pi
+def Df5(z):
+    a = z[0]
+    b = z[1]
+    return np.matrix([[np.real(k*np.power((a+b*1j),k-1)), np.real(1j*k*np.power((a+b*1j),k-1))],    #re(d/da), re(d/db)
+                      [np.imag(k*np.power((a+b*1j),k-1)), np.imag(1j*k*np.power((a+b*1j),k-1))]])   #im(d/da), im(d/db)
 
-    return np.array([[j*pow(r, j-1)*np.cos(j*phi),-1*pow(r, j)*j*np.sin(j*phi)],
-                    [j*pow(r, j-1)*np.sin(j*phi), pow(r, j)*j*np.cos(j*phi)]])
-
-
+print("\nf5:")
 x_ki = []
-x_star = newton(np.array([0.1,0.1]), f5, Df5, 0.0001, 10, x_ki)
-print(x_star)
-print("")
-for i in x_ki: print(i)
-"""
+x_star = newton(np.array([-1,-1]), f5, Df5, tol, 1000, x_ki)
+print("x*=", x_star)
+print("\nIterationsschritte:")
+it=0
+for i in x_ki:
+    print(it, ":", i)
+    it+=1
+
+fig3, (axa3) = plt.subplots(1,1)
+fig3.suptitle("c) Newton in der komplexen Ebene")
+plt.xlabel("a")
+plt.ylabel("b")
+
+a_werte = np.linspace(-1, 1, num=100)
+b_werte = np.linspace(-1, 1, num=100)
+
+for ia, a in enumerate(a_werte):
+    for ib, b in enumerate(b_werte):
+        x_star = newton(np.array([a,b]), f5, Df5, tol, 1000, x_ki)
+        if (np.linalg.norm(np.array([1,0])-x_star)<1.e-8): axa3.plot(a, b, 'o',color="red")
+        if (np.linalg.norm(np.array([-1/2,np.sqrt(3)/2])-x_star)<1.e-8): axa3.plot(a, b, 'o', color="green")
+        if (np.linalg.norm(np.array([-1/2, np.sqrt(3)/-2]) - x_star) < 1.e-8): axa3.plot(a, b, 'o', color="blue")
 
 plt.show()
