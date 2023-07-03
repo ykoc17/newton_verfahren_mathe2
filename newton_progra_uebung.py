@@ -50,34 +50,53 @@ def Df3(x): #in-place ?
     return np.array([[0.25*x[0]*np.pi*np.cos(np.pi*0.5*x[0])+0.5*np.sin(np.pi*0.5*x[0]), -1],
                      [-1, 2*x[1]]])
 
-print("f1:\n")
+
+fig1, (axa1, axa2, axa3) = plt.subplots(3,1)
+fig1.suptitle("a) (x_k, y_k), k=0,1,... -> gegen x*")
+plt.xlabel("x_k")
+plt.ylabel("y_k")
+
+
+print("f1:")
 x_ki = []
-x_star = newton(np.array([1,1]), f1, Df1, 0.0001, 1000, x_ki)
+x_star = newton(np.array([3,1]), f1, Df1, 0.0001, 1000, x_ki)
 print("x*=", x_star)
 print("\nIterationsschritte:")
+
+axa1.plot(x_star[0], x_star[1], '*', color="green")
 it=0
 for i in x_ki:
     print(it, ":", i)
+    axa1.plot(i[0], i[1], '.', color="black")
+    axa1.text(i[0], i[1], "x" + str(it), color="red", fontsize="small")
     it+=1
 
-print("\nf2:\n")
+print("\nf2:")
 x_ki = []
-x_star = newton(np.array([1,0.1]), f1, Df1, 0.0001, 1000, x_ki)
+x_star = newton(np.array([7.345,0.1245]), f2, Df2, 0.0001, 1000, x_ki)
 print("x*=", x_star)
 print("\nIterationsschritte:")
+
+axa2.plot(x_star[0], x_star[1], '*', color="green")
 it=0
 for i in x_ki:
     print(it, ":", i)
+    axa2.plot(i[0], i[1], '.', color="black")
+    axa2.text(i[0], i[1], "x" + str(it), color="red", fontsize="small")
     it+=1
 
-print("\nf3:\n")
+print("\nf3:")
 x_ki = []
-x_star = newton(np.array([1,0.1]), f2, Df2, 0.0001, 1000, x_ki)
+x_star = newton(np.array([1,0.1]), f3, Df3, 0.0001, 1000, x_ki)
 print("x*=", x_star)
 print("\nIterationsschritte:")
+
+axa3.plot(x_star[0], x_star[1], '*', color="green")
 it=0
 for i in x_ki:
     print(it, ":", i)
+    axa3.plot(i[0], i[1], '.', color="black")
+    axa3.text(i[0], i[1], "x" + str(it), color="red", fontsize="small")
     it+=1
 
 
@@ -89,7 +108,7 @@ def f4(x):
 def Df4(x):
     return 4*pow(x,3)-10*x
 
-print("\nf4:\n")
+print("\nf4:")
 x_ki = []
 x_star = newton(np.array([5]), f4, Df4, 0.0001, 1000, x_ki)
 print("x*=", x_star)
@@ -101,17 +120,32 @@ for i in x_ki:
 
 
 x_startwerte = np.linspace(-2.5, 2.5, num=10000)
-
-x_star_werte = np.array([])
-for x0 in x_startwerte:
-    x_star = newton(x0, f4, Df4, 0.0001, 1000)
-    x_star_werte = np.append(x_star_werte, x_star)
+x_star_tol = np.float_power(10,-2)
 
 fig, (axa, axb) = plt.subplots(2,1)
-fig.suptitle("Grenzwerte für jeden Startwert x0 aus [-2.5, 2.5]")
-axa.plot(x_startwerte, x_star_werte, "_")
-axb.plot(x_startwerte, f4(x_startwerte))
-axb.plot(x_startwerte, np.zeros(x_startwerte.size))
+fig.suptitle("b) Grenzwerte für jeden Startwert x0 aus [-2.5, 2.5]")
+plt.xlabel("x")
+plt.ylabel("f4(x)")
+
+
+for x in x_startwerte:
+    x0 = np.array([x])
+    x_star = newton(x0, f4, Df4, 0.0001, 1000)
+    if np.abs(x_star+2) <=  x_star_tol:
+        axa.plot(x0, x_star, '.', color="red")
+        axb.plot(x0, f4(x0), '.', color="red")
+    elif np.abs(x_star+1) <=  x_star_tol:
+        axa.plot(x0, x_star, '.', color="limegreen")
+        axb.plot(x0, f4(x0), '.', color="limegreen")
+    elif np.abs(x_star-1) <=  x_star_tol:
+        axa.plot(x0, x_star, '.', color="blue")
+        axb.plot(x0, f4(x0), '.', color="blue")
+    elif np.abs(x_star-2) <=  x_star_tol:
+        axa.plot(x0, x_star, '.', color="yellow")
+        axb.plot(x0, f4(x0), '.', color="yellow")
+
+plt.figtext(0.27, 0.4, "red-> -2   green-> -1   blue-> 1   yellow-> 2")
+
 
 #c)
 """
