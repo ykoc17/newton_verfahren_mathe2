@@ -174,13 +174,14 @@ for i in x_ki:
     print(it, ":", i)
     it+=1
 
-fig3, (axa3) = plt.subplots(1,1)
-fig3.suptitle("c) Newton in der komplexen Ebene")
-plt.xlabel("a")
-plt.ylabel("b")
-
 a_werte = np.linspace(-1, 1, num=100)
 b_werte = np.linspace(-1, 1, num=100)
+
+k=3
+fig3, (axa3) = plt.subplots(1,1)
+fig3.suptitle("c) j=3, r: (1,0) g: (-1/2, √3/2) b: (-1/2, -√3/2)", fontsize="small")
+plt.xlabel("a")
+plt.ylabel("b")
 
 for ia, a in enumerate(a_werte):
     for ib, b in enumerate(b_werte):
@@ -188,5 +189,74 @@ for ia, a in enumerate(a_werte):
         if (np.linalg.norm(np.array([1,0])-x_star)<1.e-8): axa3.plot(a, b, 'o',color="red")
         if (np.linalg.norm(np.array([-1/2,np.sqrt(3)/2])-x_star)<1.e-8): axa3.plot(a, b, 'o', color="green")
         if (np.linalg.norm(np.array([-1/2, np.sqrt(3)/-2]) - x_star) < 1.e-8): axa3.plot(a, b, 'o', color="blue")
+
+axa3.plot(1, 0, 'x', color="yellow")
+axa3.plot(-1/2, np.sqrt(3)/2, 'x', color="yellow")
+axa3.plot(-1/2, np.sqrt(3)/-2, 'x', color="yellow")
+
+k=4
+fig4, (axa4) = plt.subplots(1,1)
+fig4.suptitle("c) j=4, r: (1,0) g: (-1,0) b: (0,-1) y: (0,1)", fontsize="small")
+plt.xlabel("a")
+plt.ylabel("b")
+
+for ia, a in enumerate(a_werte):
+    for ib, b in enumerate(b_werte):
+        x_star = newton(np.array([a,b]), f5, Df5, tol, 1000, x_ki)
+        if (np.linalg.norm(np.array([1,0])-x_star)<1.e-8): axa4.plot(a, b, 'o',color="red")
+        if (np.linalg.norm(np.array([-1,0])-x_star)<1.e-8): axa4.plot(a, b, 'o', color="green")
+        if (np.linalg.norm(np.array([0,-1]) - x_star) < 1.e-8): axa4.plot(a, b, 'o', color="blue")
+        if (np.linalg.norm(np.array([0, 1]) - x_star) < 1.e-8): axa4.plot(a, b, 'o', color="yellow")
+
+
+axa4.plot(1, 0, 'x', color="black")
+axa4.plot(-1, 0, 'x', color="black")
+axa4.plot(0, -1, 'x', color="black")
+axa4.plot(0, 1, 'x', color="black")
+
+k=5
+fig5, (axa5) = plt.subplots(1,1)
+fig5.suptitle("c) j=5, r: (1,0) g: (0.25*(√5-1), (√0.5*(√5+5))/2) blu: (0.25*(-√5-1), (√0.5*(-√5+5))/2) y: (0.25*(-√5-1),(-√0.5*(-√5+5))/2) bla: (0.25*(√5-1),(-√0.5*(√5+5))/2)", fontsize="small")
+plt.xlabel("a")
+plt.ylabel("b")
+
+
+for ia, a in enumerate(a_werte):
+    for ib, b in enumerate(b_werte):
+        x_star = newton(np.array([a,b]), f5, Df5, tol, 1000, x_ki)
+        if (np.linalg.norm(np.array([1,0])-x_star)<1.e-8): axa5.plot(a, b, 'o',color="red")
+        if (np.linalg.norm(np.array([0.25*(np.sqrt(5)-1), np.sqrt(0.5*(np.sqrt(5)+5))/2]) - x_star) < 1.e-8): axa5.plot(a, b, 'o', color="green")
+        if (np.linalg.norm(np.array([0.25*(-np.sqrt(5)-1), np.sqrt(0.5*(-np.sqrt(5)+5))/2]) - x_star) < 1.e-8): axa5.plot(a, b, 'o', color="blue")
+        if (np.linalg.norm(np.array([0.25*(-np.sqrt(5)-1), -np.sqrt(0.5*(-np.sqrt(5)+5))/2]) - x_star) < 1.e-8): axa5.plot(a, b, 'o', color="yellow")
+        if (np.linalg.norm(np.array([0.25*(np.sqrt(5)-1), -np.sqrt(0.5*(np.sqrt(5)+5))/2]) - x_star) < 1.e-8): axa5.plot(a, b, 'o', color="black")
+
+axa5.plot(1, 0, 'x', color="purple")
+axa5.plot(0.25*(np.sqrt(5)-1), np.sqrt(0.5*(np.sqrt(5)+5))/2, 'x', color="purple")
+axa5.plot(0.25*(-np.sqrt(5)-1), np.sqrt(0.5*(-np.sqrt(5)+5))/2, 'x', color="purple")
+axa5.plot(0.25*(-np.sqrt(5)-1), -np.sqrt(0.5*(-np.sqrt(5)+5))/2, 'x', color="purple")
+axa5.plot(0.25*(np.sqrt(5)-1), -np.sqrt(0.5*(np.sqrt(5)+5))/2, 'x', color="purple")
+
+k=6
+fig6, (axa6) = plt.subplots(1,1)
+fig6.suptitle("c) j=6, r: (1,0) g: (1/2, √3/2) b: (-1/2, √3/2) y: (-1,0) bla: (-1/2, -√3/2) o: (1/2, -√3/2)", fontsize="small")
+plt.xlabel("a")
+plt.ylabel("b")
+
+for ia, a in enumerate(a_werte):
+    for ib, b in enumerate(b_werte):
+        x_star = newton(np.array([a,b]), f5, Df5, tol, 1000, x_ki)
+        if (np.linalg.norm(np.array([1,0])-x_star)<1.e-8): axa6.plot(a, b, 'o',color="red")
+        if (np.linalg.norm(np.array([1/2,np.sqrt(3)/2])-x_star)<1.e-8): axa6.plot(a, b, 'o', color="green")
+        if (np.linalg.norm(np.array([-1/2, np.sqrt(3)/2]) - x_star) < 1.e-8): axa6.plot(a, b, 'o', color="blue")
+        if (np.linalg.norm(np.array([-1,0])-x_star)<1.e-8): axa6.plot(a, b, 'o',color="yellow")
+        if (np.linalg.norm(np.array([-1/2,np.sqrt(3)/-2])-x_star)<1.e-8): axa6.plot(a, b, 'o', color="black")
+        if (np.linalg.norm(np.array([1/2, np.sqrt(3)/-2]) - x_star) < 1.e-8): axa6.plot(a, b, 'o', color="orange")
+
+axa6.plot(1, 0, 'x', color="purple")
+axa6.plot(1/2, np.sqrt(3)/2, 'x', color="purple")
+axa6.plot(-1/2, np.sqrt(3)/2, 'x', color="purple")
+axa6.plot(-1, 0, 'x', color="purple")
+axa6.plot(-1/2, np.sqrt(3)/-2, 'x', color="purple")
+axa6.plot(1/2, np.sqrt(3)/-2, 'x', color="purple")
 
 plt.show()
