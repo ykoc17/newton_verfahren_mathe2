@@ -177,6 +177,9 @@ for i in x_ki:
 a_werte = np.linspace(-1, 1, num=100)
 b_werte = np.linspace(-1, 1, num=100)
 
+print("\n")
+
+print("k=3 ...")
 k=3
 fig3, (axa3) = plt.subplots(1,1)
 fig3.suptitle("c) j=3, r: (1,0) g: (-1/2, √3/2) b: (-1/2, -√3/2)", fontsize="small")
@@ -194,6 +197,9 @@ axa3.plot(1, 0, 'x', color="yellow")
 axa3.plot(-1/2, np.sqrt(3)/2, 'x', color="yellow")
 axa3.plot(-1/2, np.sqrt(3)/-2, 'x', color="yellow")
 
+print("\n")
+
+print("k=4 ...")
 k=4
 fig4, (axa4) = plt.subplots(1,1)
 fig4.suptitle("c) j=4, r: (1,0) g: (-1,0) b: (0,-1) y: (0,1)", fontsize="small")
@@ -214,6 +220,9 @@ axa4.plot(-1, 0, 'x', color="black")
 axa4.plot(0, -1, 'x', color="black")
 axa4.plot(0, 1, 'x', color="black")
 
+print("\n")
+
+print("k=5 ...")
 k=5
 fig5, (axa5) = plt.subplots(1,1)
 fig5.suptitle("c) j=5, r: (1,0) g: (0.25*(√5-1), (√0.5*(√5+5))/2) blu: (0.25*(-√5-1), (√0.5*(-√5+5))/2) y: (0.25*(-√5-1),(-√0.5*(-√5+5))/2) bla: (0.25*(√5-1),(-√0.5*(√5+5))/2)", fontsize="small")
@@ -236,6 +245,9 @@ axa5.plot(0.25*(-np.sqrt(5)-1), np.sqrt(0.5*(-np.sqrt(5)+5))/2, 'x', color="purp
 axa5.plot(0.25*(-np.sqrt(5)-1), -np.sqrt(0.5*(-np.sqrt(5)+5))/2, 'x', color="purple")
 axa5.plot(0.25*(np.sqrt(5)-1), -np.sqrt(0.5*(np.sqrt(5)+5))/2, 'x', color="purple")
 
+print("\n")
+
+print("k=6 ...")
 k=6
 fig6, (axa6) = plt.subplots(1,1)
 fig6.suptitle("c) j=6, r: (1,0) g: (1/2, √3/2) b: (-1/2, √3/2) y: (-1,0) bla: (-1/2, -√3/2) o: (1/2, -√3/2)", fontsize="small")
