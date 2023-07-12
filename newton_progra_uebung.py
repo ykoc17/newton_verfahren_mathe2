@@ -29,24 +29,24 @@ def newton(x0, f, Df, tol, itmax, x=None):
 #a)
 #Testbeispiele
 
-def f1(x): #in-place ?
+def f1(x):
     return np.array([pow(x[0],2) + pow(x[1], 2) -1, x[0]*x[1]-0.25])
 
-def f2(x): #in-place ?
+def f2(x):
     return np.array([pow(x[0], 2)-x[1]-2, x[0]*x[1]+1])
 
-def f3(x): #in-place
+def f3(x):
     return np.array([x[0]*0.5*np.sin(np.pi*0.5*x[0])-x[1], pow(x[1], 2)-x[0]+1])
 
-def Df1(x): #in-place ?
+def Df1(x):
     return np.array([[2*x[0], 2*x[1]],
                      [x[1], x[0]]])
 
-def Df2(x): #in-place ?
+def Df2(x):
     return np.array([[2*x[0], -1],
                      [x[1], x[0]]])
 
-def Df3(x): #in-place ?
+def Df3(x):
     return np.array([[0.25*x[0]*np.pi*np.cos(np.pi*0.5*x[0])+0.5*np.sin(np.pi*0.5*x[0]), -1],
                      [-1, 2*x[1]]])
 
